@@ -1,3 +1,46 @@
-h1 {
-  font-family: "Courier New", Courier, monospace;
+:root {
+  --color-background: #222;
+  --color-heading: #222;
+  --color-secondary: #00d79f;
+  --color-main: #00bae8;
+  --color-accent: #f6f560;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.header {
+  font-size: 20px;
+  text-align: center;
+}
+
+body {
+  background-color: var(--color-background);
+}
+
+#graph {
+  height: 413px;
+  width: 598px;
+  margin: auto;
+  position: relative;
+  margin-top: 64px;
+}
+
+.block {
+  width: 28px;
+  background-color: var(--color-secondary);
+  position: absolute;
+  bottom: 0px;
+  transition: 0.2s all ease;
+}
+
+.block_id {
+  position: absolute;
+  color: black;
+  margin-top: -20px;
+  width: 100%;
+  text-align: center;
 }

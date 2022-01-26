@@ -22,71 +22,14 @@ DOM
 
 [] update when slider is moved
 
-
-
-*Today:
-
-
-[] 1. Get webpackets working
-[] 2. understand canvas (video) 
-[] 3. progam dom so that it displays graph based on arrray.
-
-
-
-
-
-
 */
 
 // .NEXT
 
-// Finish with wepack and link pages together.
 // keep adding sorting metods
 // dom manipulation, css, and html.
+// setup interval delay to make smoother sorting
 
-// GRAPH
-
-
-let COLS = 100; // update values when select length of array and max values in array.
-let ROWS = 100;
-let BLOCK_SIZE = 5;
-
-
-const canvas = document.getElementById('board');
-// const ctx = canvas.getContext('2d');
-
-// Calculate size of canvas from constants.
-// ctx.canvas.width = COLS * BLOCK_SIZE *2;
-// ctx.canvas.height = ROWS * BLOCK_SIZE;
-
-// Scale blocks
-// ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
-
-class Board {
-  
-    // Reset the board when we start a new game.
-    reset() {
-      this.grid = this.getEmptyBoard();
-    }
-    
-    // Get matrix filled with zeros.
-    getEmptyBoard() {
-      return Array.from(
-        {length: ROWS}, () => Array(COLS).fill(0)
-    );
-    }
-}
-
-
-let board = new Board();
-console.log('board')
-
-
-
-const draw = (array)=>{
-    forEach()
-
-}
 
 
 
@@ -95,7 +38,7 @@ const draw = (array)=>{
 
 let array = [];
 
-//should this be in the array class?
+const container = document.getElementById("graph");
 
 class Array {
 
@@ -103,25 +46,55 @@ class Array {
         
         this.length = length;
         this.maxValue = maxValue;
-        
-        this.randomNumber = (maxValue)=>{
-            return Math.floor(Math.random()*maxValue) // why not defined
-        }
-        
-        while(this.length > 0){
-            array.push(this.randomNumber(this.maxValue))
-            this.length--
-        }
+        createArray(array, this.maxValue, this.length);
+        setColor(array);
     }
-
-    
-// might need a setter for array?
 
 }
 
+const randomNumber = (maxValue)=>{
+    return Math.ceil(Math.random()*maxValue) // why not defined
+    
+}
+const createArray = (array, maxValue, length)=> {
+    for(let i= 0; i < length; i++){
+        const value = randomNumber(maxValue);
+        array.push(value);
+        createHtmlDivs(value, i);
+    }
+}
 
-let a = new Array(100, 100)
-console.log(array)
+const createHtmlDivs = (value, i)=>{ 
+    const el = document.createElement("div");
+    el.classList.add("block");
+    el.setAttribute("id",`_${i}`);
+    displayElement(value, i, el);  
+    // createLabel(el, value);
+}
+
+
+
+const displayElement = (value, i, el)=>{
+    el.style.height = `${value * 3}px`;
+    el.style.transform = `translate(${i * 30}px)`;
+    container.appendChild(el);
+}
+
+const createLabel = (el, value)=>{
+    let elLabel = document.createElement("label");
+    elLabel.classList.add("block_id");
+    elLabel.innerText = value;
+    el.appendChild(elLabel);
+}
+const setColor = (array) =>{
+    for(let i in array){
+        const el = document.getElementById(`_${i}`);
+        el.style.backgroundColor = "var(--color-main)";
+    }
+}
+
+let a = new Array(20, 100);
+console.log(array);
 
 
 
@@ -130,10 +103,29 @@ console.log(array)
 
 
 const swap = (array, i, swapIndex)=>{
-    let current = array[i];
+    
+    const currentEl = document.getElementById(`_${i}`);
+    const swapEl = document.getElementById(`_${swapIndex}`);
+    currentEl.style.backgroundColor = "var(--color-accent)";
+    swapEl.style.backgroundColor = "var(--color-accent)";
+    
+    const current = array[i];
     array[i] = array[swapIndex];
     array[swapIndex] = current;
-   
+
+    displayElement(array[i], i, currentEl);
+    displayElement(array[swapIndex], swapIndex, swapEl); //updat label also
+
+    currentEl.style.backgroundColor = "var(--color-main)";
+    swapEl.style.backgroundColor = "var(--color-main)";
+}
+
+const sortedColor = (array) => {
+
+    for(let i in array){
+        const el = document.getElementById(`_${i}`);
+        el.style.backgroundColor = "var(--color-secondary)";
+    }
 }
 
 class Bubble {
@@ -150,12 +142,18 @@ class Bubble {
                     // update dom
                 }
             }
-            if(isSorted) return;
+            if(isSorted) {
+                sortedColor(array);
+                return; // turn all green or done color
+            }
             val++;
         }
     }
-    // should have draw(). will be triggered in the animatepage
+  
 }
+
+// const b = new Bubble(array)
+console.log(array)
 
 
 class Selection{
@@ -165,15 +163,16 @@ class Selection{
         let index = 0;
         for(let i = 0; i < array.length; i++){
             let smallest = index;
+
             for(let j = index; j < array.length; j++){
                 if(array[j+1] < array[smallest]){
-                    
                     smallest = j+1;
                 }
             }
             swap(array, i, smallest)
             index++; 
         }
+        sortedColor(array);
     }
 }
 
@@ -229,7 +228,7 @@ function merge (array){
         arr2.push(array[i])
         i++;
     }
-    console.log(arr1, arr2);
+    // console.log(arr1, arr2);
 
     merge(arr1)
     merge(arr2)
