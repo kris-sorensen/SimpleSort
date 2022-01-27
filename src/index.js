@@ -27,8 +27,9 @@ DOM
 // .NEXT
 
 // keep adding sorting metods
-// dom manipulation, css, and html.
-// setup interval delay to make smoother sorting
+// //dom manipulation, css, and html.
+// //setup interval delay to make smoother sorting
+// setup ability to have sorting algorithm display how long it took to sort list. Might need to recursively call the function again and have a booleen variable wrap around the await part of the for loop and not allow those to trigger the second time so that you can get an accurate measurement on how long it takes to sort that array with that algorithm. App would also allow you to compare that same array using one algorithm with other algorithms to find out what one would be the fastest with that size array.
 
 
 
@@ -53,7 +54,7 @@ class Array {
 }
 
 const randomNumber = (maxValue)=>{
-    return Math.ceil(Math.random()*maxValue) // why not defined
+    return Math.ceil(Math.random() * maxValue);
     
 }
 const createArray = (array, maxValue, length)=> {
@@ -93,7 +94,7 @@ const setColor = (array) =>{
     }
 }
 
-let a = new Array(20, 100);
+let a = new Array(40, 100);
 console.log(array);
 
 
@@ -101,13 +102,23 @@ console.log(array);
 
 // * SORTING ALGORITHMS
 
+let delay = 200;
+
 
 const swap = (array, i, swapIndex)=>{
+    
     
     const currentEl = document.getElementById(`_${i}`);
     const swapEl = document.getElementById(`_${swapIndex}`);
     currentEl.style.backgroundColor = "var(--color-accent)";
     swapEl.style.backgroundColor = "var(--color-accent)";
+    
+    
+};
+
+const swap2 = (array, i, swapIndex)=>{
+    const currentEl = document.getElementById(`_${i}`);
+    const swapEl = document.getElementById(`_${swapIndex}`);
     
     const current = array[i];
     array[i] = array[swapIndex];
@@ -118,7 +129,9 @@ const swap = (array, i, swapIndex)=>{
 
     currentEl.style.backgroundColor = "var(--color-main)";
     swapEl.style.backgroundColor = "var(--color-main)";
-}
+};
+
+
 
 const sortedColor = (array) => {
 
@@ -126,70 +139,89 @@ const sortedColor = (array) => {
         const el = document.getElementById(`_${i}`);
         el.style.backgroundColor = "var(--color-secondary)";
     }
-}
+};
 
-class Bubble {
+const sleep = (time) => {
+    return new Promise(resolve => setTimeout(resolve, time))
+  }
 
-    constructor(array){
-        let val = 0;
-        let isSorted = true;
-        for(let i = 0; i < array.length; i++){
-            isSorted = true;
-            for(let i = 1; i < array.length - val; i++){
-                if(array[i] < array[i - 1]){
-                    swap(array, i, i - 1)
-                    isSorted = false;
-                    // update dom
-                }
+
+
+
+async function Bubble(array) {
+
+    
+    let val = 0;
+    let isSorted = true;
+    for(let i = 0; i < array.length; i++){
+
+        isSorted = true;
+
+        for(let i = 1; i < array.length - val; i++){
+
+            if(array[i] < array[i - 1]){
+
+                swap(array, i, i - 1);
+                await sleep(delay);
+                swap2(array, i, i - 1);
+                isSorted = false;
             }
-            if(isSorted) {
-                sortedColor(array);
-                return; // turn all green or done color
-            }
-            val++;
         }
+        if(isSorted) {
+            sortedColor(array); //update color for bubble sort for each sorted el
+            return;
+        }
+        val++;
+    
     }
   
 }
 
-// const b = new Bubble(array)
-console.log(array)
 
 
-class Selection{
+
+async function Selection (array) {
     //n**2 w/ no shortcuts to end early so it is one of the slowest.
-    constructor(array){
+    
 
         let index = 0;
         for(let i = 0; i < array.length; i++){
-            let smallest = index;
+            let smallestIndex = index;
 
             for(let j = index; j < array.length; j++){
-                if(array[j+1] < array[smallest]){
-                    smallest = j+1;
+
+                if(array[j+1] < array[smallestIndex]){
+                    smallestIndex = j+1;
                 }
             }
-            swap(array, i, smallest)
+
+            swap(array, i, smallestIndex);
+            await sleep(delay);
+            swap2(array, i, smallestIndex);
             index++; 
         }
         sortedColor(array);
-    }
+   
 }
 
-class Insertion{
-    constructor(array){
-        for(let i = 1; i < array.length; i++){
+const b = Bubble(array)
+
+
+async function Insertion(array){
+    
+    for(let i = 1; i < array.length; i++){
+        
+        let current = array[i];
+        let j = i - 1;
+        
+        while(j >= 0 && array[j] > current){
             
-            let current = array[i];
-            let j = i - 1;
-            
-            while(j >= 0 && array[j] > current){
-                array[j + 1] = array[j];
-                j--;
-            }
-            array[j+1] = current; 
+            array[j + 1] = array[j];
+            j--;
         }
+        array[j+1] = current; 
     }
+    
 }
 
 // more space but runs in (n log n)
