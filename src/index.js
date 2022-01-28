@@ -112,7 +112,7 @@ const setColor = (array) =>{
     }
 }
 
-let a = new Array(arrayLength, 100);
+// let a = new Array(arrayLength, 100);
 
 
 
@@ -120,6 +120,9 @@ let a = new Array(arrayLength, 100);
 
 // * SORTING ALGORITHMS
 
+let currentAlg = Bubble;
+let stopped = true;
+let speed = 10;
 
 
 const swap = (array, i, swapIndex)=>{
@@ -171,11 +174,11 @@ async function Bubble(array) {
         isSorted = true;
 
         for(let i = 1; i < array.length - val; i++){
-
+            if(stopped) return;
             if(array[i] < array[i - 1]){
 
                 swap(array, i, i - 1);
-                await sleep(10);
+                await sleep(speed);
                 swap2(array, i, i - 1);
                 isSorted = false;
             }
@@ -209,7 +212,7 @@ async function Selection (array) {
             }
 
             swap(array, i, smallestIndex);
-            await sleep(200);
+            await sleep(speed);
             swap2(array, i, smallestIndex);
             index++; 
         }
@@ -217,7 +220,7 @@ async function Selection (array) {
    
 }
 
-const b = Selection(array)
+// const b = Selection(array)
 
 
 async function Insertion(array){
@@ -284,17 +287,26 @@ function merge (array){
 
 // * Sliders
 
-var slider = document.getElementById("myRange");
+const arraySize = document.getElementById("length");
 // var output = document.getElementById("demo");
 // output.innerHTML = slider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-    arrayLength = this.value;
+arraySize.oninput = function() {
+    arrayLength = this.value; 
+    stopped = true;
     deleteDivs();
-    a = new Array(arrayLength, 100);
+    array = [];
+    new Array(arrayLength, 100);
 
 //   output.innerHTML = this.value;
+}
+
+
+const sortingSpeed = document.getElementById("speed");
+
+sortingSpeed.oninput =  function() {
+    speed = this.value; 
 }
 
 
@@ -308,3 +320,17 @@ const deleteDivs = ()=>{
 }
 
 
+// * Btns
+
+const sort = document.getElementById("sort");
+sort.onclick = function() {
+    stopped = false;
+	currentAlg(array); 
+}
+
+
+
+
+
+
+new Array(arrayLength, 100);
