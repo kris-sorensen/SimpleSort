@@ -39,6 +39,8 @@ DOM
 
 // * ARRAY MAKER
 
+let arrayLength = 100;
+
 
 let array = [];
 
@@ -110,8 +112,8 @@ const setColor = (array) =>{
     }
 }
 
-let a = new Array(200, 100);
-console.log(array);
+let a = new Array(arrayLength, 100);
+
 
 
 
@@ -173,7 +175,7 @@ async function Bubble(array) {
             if(array[i] < array[i - 1]){
 
                 swap(array, i, i - 1);
-                await sleep(50);
+                await sleep(10);
                 swap2(array, i, i - 1);
                 isSorted = false;
             }
@@ -280,5 +282,29 @@ function merge (array){
 
 
 
+// * Sliders
+
+var slider = document.getElementById("myRange");
+// var output = document.getElementById("demo");
+// output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    arrayLength = this.value;
+    deleteDivs();
+    a = new Array(arrayLength, 100);
+
+//   output.innerHTML = this.value;
+}
+
+
+const deleteDivs = ()=>{
+    
+    const block = document.querySelectorAll('.block');
+    
+    block.forEach(div => {
+      div.remove();
+    });
+}
 
 

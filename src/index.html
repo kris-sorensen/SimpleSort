@@ -12,14 +12,31 @@
   <header>
     <ul class="navbar">
       <li>Home</li>
-      <li>Size</li>
+      <li>
+        <div class="slidecontainer">
+          Size
+          <input
+            type="range"
+            min="10"
+            max="250"
+            value="100"
+            class="slider"
+            id="myRange"
+          />
+        </div>
+      </li>
       <li>Algorithm</li>
       <li>Speed</li>
       <li>Sort</li>
     </ul>
   </header>
   <body>
-    <div id="graph"></div>
+    <div class="main">
+      <div class="sorter"><div id="graph"></div></div>
+      <div class="footer"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
     <footer></footer>
   </body>
 </html>
