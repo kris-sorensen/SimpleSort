@@ -1,9 +1,21 @@
 :root {
   --color-background: #222;
-  --color-heading: #222;
+  --color-heading: #7574fc;
   --color-secondary: #00d79f;
   --color-main: #00bae8;
   --color-accent: #f6f560;
+
+  /* --color-heading: #7574fc;
+  --color-main: #7574fc;
+  --color-board: #7574fc;
+  --color-piece0: #7574fc;
+  --color-piece1: #6bb9a2;
+  --color-piece2: #ff6ca6;
+  --color-piece3: #ff9677;
+  --color-piece4: #f9f871;
+  --color-piece5: #00aeef;
+  --color-piece6: #ba74fc;
+  --color-piece7: #ec64da; */
 }
 
 * {
@@ -12,25 +24,98 @@
   box-sizing: border-box;
 }
 
-.header {
-  font-size: 20px;
-  text-align: center;
+html {
+  font-size: 62.5%;
+  overflow: hidden;
 }
 
-body {
-  background-color: var(--color-background);
+header {
+  font-size: 2.2rem;
+  height: 7rem;
+  font-weight: 550;
+  color: var(--color-background);
+  background: var(--color-heading);
+
+  padding-left: 5rem;
+  margin-bottom: 0.1rem;
+  /* filter: drop-shadow(1 1rem 1rem rgba(0, 0, 7, 1)); */
+  /* shadow */
 }
+
+.navbar {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+header li {
+  cursor: pointer;
+  margin: 2rem;
+}
+header li:hover {
+  color: #444;
+  transition: var(--transition-header);
+}
+body {
+  background: var(--color-background);
+  color: var(--color-main);
+  font-family: Inter, arial, Arial, Helvetica, sans-serif;
+
+  font-size: 1.7rem;
+  height: 100vh;
+  line-height: 1.5;
+  width: 100vw;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-main);
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+p {
+  margin-top: 0;
+}
+
+/* Links */
+
+a {
+  text-decoration: none;
+}
+
+/* Lists */
+
+ul {
+  list-style-type: none;
+}
+
+/* Graph */
 
 #graph {
-  height: 413px;
-  width: 598px;
-  margin: auto;
+  /* height: 413px; */
+  width: 120rem;
+  /* margin: auto; */
   position: relative;
-  margin-top: 64px;
+  margin: 0 auto;
+
+  transform: scaleY(-1);
 }
 
 .block {
-  width: 28px;
+  width: 5px;
   background-color: var(--color-secondary);
   position: absolute;
   bottom: 0px;

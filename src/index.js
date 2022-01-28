@@ -24,12 +24,15 @@ DOM
 
 */
 
-// .NEXT
+
+// TODO 
 
 // keep adding sorting metods
 // //dom manipulation, css, and html.
 // //setup interval delay to make smoother sorting
 // setup ability to have sorting algorithm display how long it took to sort list. Might need to recursively call the function again and have a booleen variable wrap around the await part of the for loop and not allow those to trigger the second time so that you can get an accurate measurement on how long it takes to sort that array with that algorithm. App would also allow you to compare that same array using one algorithm with other algorithms to find out what one would be the fastest with that size array.
+// when they are in the right location have them turn green instead of just at the end.
+//? upside down?
 
 
 
@@ -55,30 +58,43 @@ class Array {
 
 const randomNumber = (maxValue)=>{
     return Math.ceil(Math.random() * maxValue);
-    
 }
+
 const createArray = (array, maxValue, length)=> {
     for(let i= 0; i < length; i++){
         const value = randomNumber(maxValue);
         array.push(value);
-        createHtmlDivs(value, i);
+        createHtmlDivs(value, i, length);
     }
+
+    // let block = document.getElementsByClassName("block");
+    // block.style.width = `${(widthCalc(length) - 2)}px)`
 }
 
-const createHtmlDivs = (value, i)=>{ 
+const createHtmlDivs = (value, i, length)=>{ 
     const el = document.createElement("div");
     el.classList.add("block");
     el.setAttribute("id",`_${i}`);
-    displayElement(value, i, el);  
+    displayElement(value, i, el, length);  
+
     // createLabel(el, value);
 }
 
 
 
-const displayElement = (value, i, el)=>{
-    el.style.height = `${value * 3}px`;
-    el.style.transform = `translate(${i * 30}px)`;
+const displayElement = (value, i, el, length)=>{
+    el.style.height = `${value * 6}px`;
+    el.style.transform = `translate(${i * (widthCalc(length))}px)`;
+    el.style.width = `${(widthCalc(length) - 2)}px)`
     container.appendChild(el);
+}
+
+const widthCalc = (length) =>{
+    if(length < 13)return 45;
+    if(length < 26)return 20;
+    if(length < 51)return 12;
+    if(length < 76)return 8;
+    if(length > 76)return 6;
 }
 
 const createLabel = (el, value)=>{
@@ -94,7 +110,7 @@ const setColor = (array) =>{
     }
 }
 
-let a = new Array(40, 100);
+let a = new Array(200, 100);
 console.log(array);
 
 
@@ -102,18 +118,13 @@ console.log(array);
 
 // * SORTING ALGORITHMS
 
-let delay = 200;
 
 
 const swap = (array, i, swapIndex)=>{
-    
-    
     const currentEl = document.getElementById(`_${i}`);
     const swapEl = document.getElementById(`_${swapIndex}`);
     currentEl.style.backgroundColor = "var(--color-accent)";
     swapEl.style.backgroundColor = "var(--color-accent)";
-    
-    
 };
 
 const swap2 = (array, i, swapIndex)=>{
@@ -162,7 +173,7 @@ async function Bubble(array) {
             if(array[i] < array[i - 1]){
 
                 swap(array, i, i - 1);
-                await sleep(delay);
+                await sleep(50);
                 swap2(array, i, i - 1);
                 isSorted = false;
             }
@@ -196,7 +207,7 @@ async function Selection (array) {
             }
 
             swap(array, i, smallestIndex);
-            await sleep(delay);
+            await sleep(200);
             swap2(array, i, smallestIndex);
             index++; 
         }
@@ -204,7 +215,7 @@ async function Selection (array) {
    
 }
 
-const b = Bubble(array)
+const b = Selection(array)
 
 
 async function Insertion(array){
