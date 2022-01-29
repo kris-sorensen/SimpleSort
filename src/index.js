@@ -39,9 +39,7 @@ DOM
 
 // * ARRAY MAKER
 
-let arrayLength = 100;
-
-
+let arrayLength = 200;
 let array = [];
 
 const container = document.getElementById("graph");
@@ -120,9 +118,9 @@ const setColor = (array) =>{
 
 // * SORTING ALGORITHMS
 
-let currentAlg = Bubble;
+let selectedAlgorithm = Selection;
 let stopped = true;
-let speed = 10;
+let speed = 100;
 
 
 const swap = (array, i, swapIndex)=>{
@@ -205,6 +203,7 @@ async function Selection (array) {
             let smallestIndex = index;
 
             for(let j = index; j < array.length; j++){
+                if(stopped) return;
 
                 if(array[j+1] < array[smallestIndex]){
                     smallestIndex = j+1;
@@ -294,13 +293,11 @@ const arraySize = document.getElementById("length");
 // Update the current slider value (each time you drag the slider handle)
 arraySize.oninput = function() {
     arrayLength = this.value; 
-    stopped = true;
-    deleteDivs();
-    array = [];
-    new Array(arrayLength, 100);
+    restart();
 
 //   output.innerHTML = this.value;
 }
+
 
 
 const sortingSpeed = document.getElementById("speed");
@@ -317,20 +314,33 @@ const deleteDivs = ()=>{
     block.forEach(div => {
       div.remove();
     });
-}
+};
 
 
 // * Btns
 
 const sort = document.getElementById("sort");
 sort.onclick = function() {
-    stopped = false;
-	currentAlg(array); 
+    if(stopped){
+        
+        stopped = false;
+        document.getElementById("sort").textContent = 'Restart';
+        selectedAlgorithm(array); 
+    }else{
+        
+        document.getElementById("sort").textContent = 'Sort';
+        restart();
+    }
+
 }
 
 
-
-
+const restart = ()=>{
+    stopped = true;
+    deleteDivs();
+    array = [];
+    new Array(arrayLength, 100);
+}
 
 
 new Array(arrayLength, 100);
