@@ -17,23 +17,23 @@
           Size
           <input
             type="range"
-            min="10"
+            min="30"
             max="250"
-            value="100"
-            class="slider"
+            value="130"
+            class="size slider"
             id="length"
           />
         </div>
       </li>
       <li>
         <div class="dropdown">
-          <div class="dropbtn">Algorithm</div>
+          <div class="dropbtn">Algorithm<i class="arrow down"></i></div>
           <div class="dropdown-content">
-            <button class="algorithm">Bubble</button>
-            <button class="algorithm">Selection</button>
-            <button class="algorithm">Insertion</button>
-            <button class="algorithm">Merge</button>
-            <button class="algorithm">Quick</button>
+            <button id="bubble"  class="algorithm">Bubble</button>
+            <button id="Selection" class="algorithm">Selection</button>
+            <button id="Insertion" class="algorithm">Insertion</button>
+            <button id="Merge" class="algorithm">Merge</button>
+            <button id="Quick" class="algorithm">Quick</button>
           </div>
         </div>
       </li>
@@ -45,14 +45,14 @@
             min="1"
             max="200"
             value="10"
-            class="slider"
+            class="speed slider"
             id="speed"
           />
         </div>
       </li>
       <li><button class="sort" id="sort" type="submit">Sort</button></li>
     </ul>
-      <li><button class="restart" id="restart" type="submit">Restart</button></li>
+      
     </ul>
   </header>
   <body>

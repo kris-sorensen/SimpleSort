@@ -39,7 +39,7 @@ DOM
 
 // * ARRAY MAKER
 
-let arrayLength = 200;
+let arrayLength = 100;
 let array = [];
 
 const container = document.getElementById("graph");
@@ -50,11 +50,16 @@ class Array {
         
         this.length = length;
         this.maxValue = maxValue;
+        // setWidth(length)
         createArray(array, this.maxValue, this.length);
         setColor(array);
     }
 
 }
+
+// const setWidth = (length)=>{
+    
+// }
 
 const randomNumber = (maxValue)=>{
     return Math.ceil(Math.random() * maxValue);
@@ -84,17 +89,25 @@ const createHtmlDivs = (value, i, length)=>{
 
 const displayElement = (value, i, el, length)=>{
     el.style.height = `${value * 6}px`;
+    // el.style.width = '10px'
+    el.style.width = `${(widthCalc(length) - 2)}px`
     el.style.transform = `translate(${i * (widthCalc(length))}px)`;
-    el.style.width = `${(widthCalc(length) - 2)}px)`
     container.appendChild(el);
 }
 
 const widthCalc = (length) =>{
-    if(length < 13)return 45;
-    if(length < 26)return 20;
-    if(length < 51)return 12;
-    if(length < 76)return 8;
-    if(length > 76)return 6;
+
+    if(length < 40)return 45;
+    if(length < 50)return 35;
+    if(length < 70)return 25;
+    if(length < 90)return 19;
+    if(length < 110)return 16;
+    if(length < 130)return 13;
+    if(length < 170)return 10;
+    if(length < 210)return 8;
+    else return 6.8;
+    
+
 }
 
 const createLabel = (el, value)=>{
@@ -138,8 +151,8 @@ const swap2 = (array, i, swapIndex)=>{
     array[i] = array[swapIndex];
     array[swapIndex] = current;
 
-    displayElement(array[i], i, currentEl);
-    displayElement(array[swapIndex], swapIndex, swapEl); //updat label also
+    displayElement(array[i], i, currentEl, array.length);
+    displayElement(array[swapIndex], swapIndex, swapEl, array.length); //updat label also
 
     currentEl.style.backgroundColor = "var(--color-main)";
     swapEl.style.backgroundColor = "var(--color-main)";
@@ -240,19 +253,7 @@ async function Insertion(array){
 }
 
 // more space but runs in (n log n)
-class Merge {
     
-    constructor(array){
-
-
-
-    }
-
-    // divide length by 2 use Math.float
-        // create 2 new seperate arrays. keep dividing recusively until you have all the pieces broken down into one. create new array at every level (need for loop)
-    // use recursion to keep dividing
-        //concat?;
-}
 
 
 function merge (array){
@@ -282,6 +283,8 @@ function merge (array){
 
 }
 
+console.log(merge([3,4,52,19,1,4]))
+
 
 
 // * Sliders
@@ -292,6 +295,7 @@ const arraySize = document.getElementById("length");
 
 // Update the current slider value (each time you drag the slider handle)
 arraySize.oninput = function() {
+    
     arrayLength = this.value; 
     restart();
 
@@ -322,7 +326,6 @@ const deleteDivs = ()=>{
 const sort = document.getElementById("sort");
 sort.onclick = function() {
     if(stopped){
-        
         stopped = false;
         document.getElementById("sort").textContent = 'Restart';
         selectedAlgorithm(array); 
@@ -339,8 +342,19 @@ const restart = ()=>{
     stopped = true;
     deleteDivs();
     array = [];
+    document.getElementById("sort").textContent = 'Sort';
     new Array(arrayLength, 100);
 }
+
+// * Algorithm selector
+
+const bubble = document.getElementById("bubble");
+bubble.onlick = function() {
+    console.log('hello')
+    // console.log(this.value)
+
+}
+
 
 
 new Array(arrayLength, 100);
